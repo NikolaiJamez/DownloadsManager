@@ -1,11 +1,15 @@
 from dataclasses import dataclass
 import flet as ft
+import getpass
+from os import listdir
+from os.path import isfile, join
 from custom_controls.rule_row import Rule_Row
 
 @dataclass
 class variables:
     RULE_COUNTER: int = 0
     RULES_FILENAME: str = 'rules.csv'
+    DOWNLOADS_DIR: str = r'C:\Users\{}\Downloads'.format(getpass.getuser())
 
 
 def main(page: ft.Page) -> None:
@@ -47,7 +51,10 @@ def main(page: ft.Page) -> None:
         rules_column.update()
 
     def run_rules(e: ft.ControlEvent) -> None:
-        raise NotImplementedError('Running rules has not been implemented yet!')
+        print(variables.DOWNLOADS_DIR)
+        # files = [f for f in listdir(variables.DOWNLOADS_DIR) if isfile(join(variables.DOWNLOADS_DIR, f))]
+
+        # raise NotImplementedError('Running rules has not been implemented yet!')
 
     
     page.window_height = 600

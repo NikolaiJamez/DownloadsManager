@@ -7,6 +7,20 @@ def main(page: ft.Page) -> None:
     def close_app(e: ft.ControlEvent) -> None:
         page.window_close()
 
+    def add_rule(e: ft.ControlEvent) -> None:
+        raise NotImplementedError('Adding rules has not been implemented yet!')
+    
+    def refresh_rules(e: ft.ControlEvent) -> None:
+        raise NotImplementedError('Refreshing rules has not been implemented yet!')
+    
+    def save_rules(e: ft.ControlEvent) -> None:
+        raise NotImplementedError('Saving rules has not been implemented yet!')
+    
+    def delete_rule(e: ft.ControlEvent) -> None:
+        raise NotImplementedError('Deleting rules has not been implemented yet!')
+    
+    def delete_all_rules(e: ft.ControlEvent) -> None:
+        raise NotImplementedError('Deleting ALL rules has not been implemented yet!')
 
     def run_rules(e: ft.ControlEvent) -> None:
         raise NotImplementedError('Running rules has not been implemented yet!')

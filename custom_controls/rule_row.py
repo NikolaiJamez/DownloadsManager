@@ -8,12 +8,12 @@ from flet import (
 )
 
 class Rule_Row(Row):
-    def __init__(self, idx, on_click):
+    def __init__(self, idx, on_click, data):
         super().__init__()
         self.controls = [
-            TextField(label = 'Label'),
-            TextField(label = 'Relative Directory Path'),
-            TextField(label = 'Pattern'),
+            TextField(label = 'Label', value = data[0]),
+            TextField(label = 'Relative Directory Path', value = data[1]),
+            TextField(label = 'Pattern', value = data[2]),
             IconButton(
                 icon = icons.DELETE,
                 icon_color = colors.RED,

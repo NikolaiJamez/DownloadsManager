@@ -5,6 +5,7 @@ from custom_controls.rule_row import Rule_Row
 @dataclass
 class variables:
     RULE_COUNTER: int = 0
+    RULES_FILENAME: str = 'rules.csv'
 
 
 def main(page: ft.Page) -> None:
@@ -23,7 +24,11 @@ def main(page: ft.Page) -> None:
         raise NotImplementedError('Refreshing rules has not been implemented yet!')
     
     def save_rules(e: ft.ControlEvent) -> None:
-        raise NotImplementedError('Saving rules has not been implemented yet!')
+        with open(variables.RULES_FILENAME, 'w') as out_file:
+            for row in rules_column.controls:
+                items = [control.value for control in row.controls[:-1]]
+                out_file.write(','.join(items))
+                out_file.write('\n')
     
     def delete_rule(e: ft.ControlEvent) -> None:
         for idx, control in enumerate(rules_column.controls):
@@ -94,7 +99,7 @@ def main(page: ft.Page) -> None:
                     icon = ft.icons.SAVE,
                     icon_color = ft.colors.GREEN,
                     tooltip = 'Save Rules',
-                    # on_click = ,
+                    on_click = save_rules,
                 ),
                 ft.IconButton(
                     icon = ft.icons.DELETE_FOREVER_ROUNDED,

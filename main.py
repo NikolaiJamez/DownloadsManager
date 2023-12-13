@@ -40,6 +40,8 @@ def main(page: ft.Page) -> None:
         ],
     )
 
+    rules_column = ft.Column()
+
     page.add(
         ft.Text('Rules', size = 30),
         ft.Row(
@@ -66,6 +68,26 @@ def main(page: ft.Page) -> None:
                     tooltip = 'Delete All Rules',
                     # on_click = ,
                 ),
+            ],
+            alignment = ft.MainAxisAlignment.CENTER
+        ),
+    ft.Divider(opacity = 0),
+    rules_column,
+    ft.Divider(opacity = 0, height = 40),
+    )
+
+    rules_column.controls.append(
+        ft.Row(
+            [
+                ft.TextField(label = 'Label'),
+                ft.TextField(label = 'Relative Directory Path'),
+                ft.TextField(label = 'Pattern'),
+                ft.IconButton(
+                    icon = ft.icons.DELETE,
+                    icon_color = ft.colors.RED,
+                    tooltip = 'Delet Rule',
+                    # on_click = ,
+                )
             ],
             alignment = ft.MainAxisAlignment.CENTER
         )

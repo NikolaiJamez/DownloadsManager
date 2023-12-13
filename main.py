@@ -39,6 +39,38 @@ def main(page: ft.Page) -> None:
             ft.VerticalDivider(),
         ],
     )
+
+    page.add(
+        ft.Text('Rules', size = 30),
+        ft.Row(
+            [
+                ft.IconButton(
+                    icon = ft.icons.ADD_ROUNDED,
+                    tooltip = 'Add Rule',
+                    # on_click = ,
+                ),
+                ft.IconButton(
+                    icon = ft.icons.REFRESH_ROUNDED,
+                    tooltip = 'Refresh Rules',
+                    # on_click = ,
+                ),
+                ft.IconButton(
+                    icon = ft.icons.SAVE,
+                    icon_color = ft.colors.GREEN,
+                    tooltip = 'Save Rules',
+                    # on_click = ,
+                ),
+                ft.IconButton(
+                    icon = ft.icons.DELETE_FOREVER_ROUNDED,
+                    icon_color = ft.colors.RED,
+                    tooltip = 'Delete All Rules',
+                    # on_click = ,
+                ),
+            ],
+            alignment = ft.MainAxisAlignment.CENTER
+        )
+    )
+
     page.update()
 
 if __name__ == '__main__':

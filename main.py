@@ -34,7 +34,8 @@ def main(page: ft.Page) -> None:
             return
     
     def delete_all_rules(e: ft.ControlEvent) -> None:
-        raise NotImplementedError('Deleting ALL rules has not been implemented yet!')
+        rules_column.controls = []
+        rules_column.update()
 
     def run_rules(e: ft.ControlEvent) -> None:
         raise NotImplementedError('Running rules has not been implemented yet!')
@@ -99,7 +100,7 @@ def main(page: ft.Page) -> None:
                     icon = ft.icons.DELETE_FOREVER_ROUNDED,
                     icon_color = ft.colors.RED,
                     tooltip = 'Delete All Rules',
-                    # on_click = ,
+                    on_click = delete_all_rules,
                 ),
             ],
             alignment = ft.MainAxisAlignment.CENTER

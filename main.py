@@ -1,5 +1,10 @@
+from dataclasses import dataclass
 import flet as ft
 from custom_controls.rule_row import Rule_Row
+
+@dataclass
+class variables:
+    RULE_COUNTER: int = 0
 
 
 def main(page: ft.Page) -> None:
@@ -8,7 +13,11 @@ def main(page: ft.Page) -> None:
         page.window_close()
 
     def add_rule(e: ft.ControlEvent) -> None:
-        raise NotImplementedError('Adding rules has not been implemented yet!')
+        rules_column.controls.append(
+            Rule_Row(variables.RULE_COUNTER)
+        )
+        variables.RULE_COUNTER = variables.RULE_COUNTER + 1
+        rules_column.update()
     
     def refresh_rules(e: ft.ControlEvent) -> None:
         raise NotImplementedError('Refreshing rules has not been implemented yet!')
@@ -25,7 +34,7 @@ def main(page: ft.Page) -> None:
     def run_rules(e: ft.ControlEvent) -> None:
         raise NotImplementedError('Running rules has not been implemented yet!')
 
-
+    
     page.window_height = 600
     page.window_width = 1000
     page.window_resizable = False
@@ -68,7 +77,7 @@ def main(page: ft.Page) -> None:
                 ft.IconButton(
                     icon = ft.icons.ADD_ROUNDED,
                     tooltip = 'Add Rule',
-                    # on_click = ,
+                    on_click = add_rule,
                 ),
                 ft.IconButton(
                     icon = ft.icons.REFRESH_ROUNDED,

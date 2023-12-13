@@ -55,8 +55,8 @@ def main(page: ft.Page) -> None:
         rules_column.controls = []
         rules_column.update()
 
-    def run_rules(e: ft.ControlEvent) -> None:
-        variables.LAST_RUN = datetime.now()
+    def run_rules(e: ft.ControlEvent = None) -> None:
+        get_last_run()
         files = [f for f in listdir(variables.DOWNLOADS_DIR) if isfile(join(variables.DOWNLOADS_DIR, f))]
         for file in files:
             file_name = '.'.join(file.split('.')[:-1])
@@ -73,6 +73,10 @@ def main(page: ft.Page) -> None:
                     move(current_file_path, new_file_path)
         last_run_control.value = variables.LAST_RUN
         last_run_control.update()
+
+    def get_last_run():
+        time = datetime.now()
+        variables.LAST_RUN = f'Today at {time.strftime("%I:%M%p")}'
 
 
     
@@ -144,6 +148,7 @@ def main(page: ft.Page) -> None:
     ft.Divider(opacity = 0, height = 40),
     )
     refresh_rules()
+    run_rules()
     page.update()
 
 if __name__ == '__main__':

@@ -13,16 +13,20 @@ def main(page: ft.Page) -> None:
     def close_app(e: ft.ControlEvent) -> None:
         page.window_close()
 
-    def add_rule(e: ft.ControlEvent) -> None:
+    def add_rule(e: ft.ControlEvent = None, rule_data = ['', '', '']) -> None:
         rules_column.controls.append(
-            Rule_Row(variables.RULE_COUNTER, delete_rule)
+            Rule_Row(variables.RULE_COUNTER, delete_rule, rule_data)
         )
         variables.RULE_COUNTER = variables.RULE_COUNTER + 1
         rules_column.update()
-    
-    def refresh_rules(e: ft.ControlEvent) -> None:
-        raise NotImplementedError('Refreshing rules has not been implemented yet!')
-    
+
+    def refresh_rules(e: ft.ControlEvent = None) -> None:
+        rules_column.controls = []
+        with open(variables.RULES_FILENAME, 'r') as in_file:
+            for row in in_file:
+                items = row.strip().split(',')
+                add_rule(rule_data = items)
+        
     def save_rules(e: ft.ControlEvent) -> None:
         with open(variables.RULES_FILENAME, 'w') as out_file:
             for row in rules_column.controls:
@@ -93,7 +97,7 @@ def main(page: ft.Page) -> None:
                 ft.IconButton(
                     icon = ft.icons.REFRESH_ROUNDED,
                     tooltip = 'Refresh Rules',
-                    # on_click = ,
+                    on_click = refresh_rules,
                 ),
                 ft.IconButton(
                     icon = ft.icons.SAVE,
@@ -114,7 +118,7 @@ def main(page: ft.Page) -> None:
     rules_column,
     ft.Divider(opacity = 0, height = 40),
     )
-
+    refresh_rules()
     page.update()
 
 if __name__ == '__main__':

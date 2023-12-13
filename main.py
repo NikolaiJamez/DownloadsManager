@@ -1,11 +1,16 @@
 import flet as ft
+from custom_controls.rule_row import Rule_Row
+
 
 def main(page: ft.Page) -> None:
+
     def close_app(e: ft.ControlEvent) -> None:
         page.window_close()
 
+
     def run_rules(e: ft.ControlEvent) -> None:
         raise NotImplementedError('Running rules has not been implemented yet!')
+
 
     page.window_height = 600
     page.window_width = 1000
@@ -74,23 +79,6 @@ def main(page: ft.Page) -> None:
     ft.Divider(opacity = 0),
     rules_column,
     ft.Divider(opacity = 0, height = 40),
-    )
-
-    rules_column.controls.append(
-        ft.Row(
-            [
-                ft.TextField(label = 'Label'),
-                ft.TextField(label = 'Relative Directory Path'),
-                ft.TextField(label = 'Pattern'),
-                ft.IconButton(
-                    icon = ft.icons.DELETE,
-                    icon_color = ft.colors.RED,
-                    tooltip = 'Delet Rule',
-                    # on_click = ,
-                )
-            ],
-            alignment = ft.MainAxisAlignment.CENTER
-        )
     )
 
     page.update()

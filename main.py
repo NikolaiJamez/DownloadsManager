@@ -1,8 +1,11 @@
 from dataclasses import dataclass
 import flet as ft
 import getpass
+from pathlib import Path
+import re
+from shutil import move
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, exists
 from custom_controls.rule_row import Rule_Row
 
 @dataclass
@@ -10,6 +13,7 @@ class variables:
     RULE_COUNTER: int = 0
     RULES_FILENAME: str = 'rules.csv'
     DOWNLOADS_DIR: str = r'C:\Users\{}\Downloads'.format(getpass.getuser())
+    LAST_RUN = 'Never'
 
 
 def main(page: ft.Page) -> None:
@@ -51,10 +55,21 @@ def main(page: ft.Page) -> None:
         rules_column.update()
 
     def run_rules(e: ft.ControlEvent) -> None:
-        print(variables.DOWNLOADS_DIR)
-        # files = [f for f in listdir(variables.DOWNLOADS_DIR) if isfile(join(variables.DOWNLOADS_DIR, f))]
+        files = [f for f in listdir(variables.DOWNLOADS_DIR) if isfile(join(variables.DOWNLOADS_DIR, f))]
+        for file in files:
+            file_name = '.'.join(file.split('.')[:-1])
+            file_extension = file.split('.')[-1]
+            current_file_path = join(variables.DOWNLOADS_DIR, file)
+            for row in rules_column.controls:
+                if re.search(row.controls[2].value, file):
+                    new_directory = join(variables.DOWNLOADS_DIR, row.controls[1].value)
+                    Path(new_directory).mkdir(parents = True, exist_ok = True)
+                    new_file_path = join(new_directory, file)
+                    counter = 1
+                    while exists(new_file_path):
+                        new_file_path = join(new_directory, f'{file_name} ({counter}).{file_extension}')
+                    move(current_file_path, new_file_path)
 
-        # raise NotImplementedError('Running rules has not been implemented yet!')
 
     
     page.window_height = 600
@@ -62,8 +77,7 @@ def main(page: ft.Page) -> None:
     page.window_resizable = False
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
 
-    last_run_value = 'Never'
-    last_run_control = ft.Text(last_run_value)
+    last_run_control = ft.Text(variables.LAST_RUN)
 
     page.appbar = ft.AppBar(
         leading = ft.Icon(ft.icons.DOWNLOADING_ROUNDED),

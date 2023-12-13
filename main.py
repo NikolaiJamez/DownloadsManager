@@ -3,6 +3,7 @@ import flet as ft
 import getpass
 from pathlib import Path
 import re
+from datetime import datetime
 from shutil import move
 from os import listdir
 from os.path import isfile, join, exists
@@ -55,6 +56,7 @@ def main(page: ft.Page) -> None:
         rules_column.update()
 
     def run_rules(e: ft.ControlEvent) -> None:
+        variables.LAST_RUN = datetime.now()
         files = [f for f in listdir(variables.DOWNLOADS_DIR) if isfile(join(variables.DOWNLOADS_DIR, f))]
         for file in files:
             file_name = '.'.join(file.split('.')[:-1])
@@ -69,6 +71,8 @@ def main(page: ft.Page) -> None:
                     while exists(new_file_path):
                         new_file_path = join(new_directory, f'{file_name} ({counter}).{file_extension}')
                     move(current_file_path, new_file_path)
+        last_run_control.value = variables.LAST_RUN
+        last_run_control.update()
 
 
     

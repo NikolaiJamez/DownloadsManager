@@ -14,7 +14,7 @@ def main(page: ft.Page) -> None:
 
     def add_rule(e: ft.ControlEvent) -> None:
         rules_column.controls.append(
-            Rule_Row(variables.RULE_COUNTER)
+            Rule_Row(variables.RULE_COUNTER, delete_rule)
         )
         variables.RULE_COUNTER = variables.RULE_COUNTER + 1
         rules_column.update()
@@ -26,7 +26,12 @@ def main(page: ft.Page) -> None:
         raise NotImplementedError('Saving rules has not been implemented yet!')
     
     def delete_rule(e: ft.ControlEvent) -> None:
-        raise NotImplementedError('Deleting rules has not been implemented yet!')
+        for idx, control in enumerate(rules_column.controls):
+            if control.data != e.control.data:
+                continue
+            rules_column.controls.pop(idx)
+            rules_column.update()
+            return
     
     def delete_all_rules(e: ft.ControlEvent) -> None:
         raise NotImplementedError('Deleting ALL rules has not been implemented yet!')
